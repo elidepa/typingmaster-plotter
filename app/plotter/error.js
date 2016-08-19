@@ -60,7 +60,7 @@ exports.histogram = (err, window, cb, options) => {
                 .attr('text-anchor', 'middle')
                 .attr('x', width/2)
                 .attr('y', margin.top + height + 60)
-                .text(`You made less errors than ${percentFormat(1 - (pos / n))} of other participants!`)
+                .text(`You made less errors than ${percentFormat(1 - (pos / n))} of the other participants!`)
         }
 
         bar.append('rect')

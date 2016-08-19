@@ -1,14 +1,9 @@
 const mysql = require('mysql')
 const dbConfig = require('../../config/database')
 
-const test = require('./test.js')
 const get = require('./get.js')
 
 const connectionPool = mysql.createPool(dbConfig.connectionSettings)
-
-exports.test = () => {
-    test.test(connectionPool)
-}
 
 exports.getWpm = (limit, cb) => {
     get.wpm(connectionPool, limit, cb)

@@ -68,7 +68,7 @@ exports.histogram = (err, window, cb, options) => {
                 .attr('text-anchor', 'middle')
                 .attr('x', width/2)
                 .attr('y', margin.top + height + 60)
-                .text(`You were faster than ${percentFormat(pos / n)} of other participants!`)
+                .text(`You were faster than ${percentFormat(pos / n)} of the other participants!`)
         }
 
         bar.append('rect')

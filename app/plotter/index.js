@@ -2,7 +2,6 @@ const jsdom = require('jsdom')
 const fs = require('fs')
 const jquery = fs.readFileSync(__dirname + "/../../public/vendor/jquery-3.1.0.js")
 
-const test = require('./test')
 const wpmPlotter = require('./wpm')
 const errorPlotter = require('./error')
 
@@ -19,10 +18,6 @@ let plot = (done, cb, options) => {
             done(err, window, cb, options)
         }
     })
-}
-
-exports.test = (cb) => {
-    plot(test.test, cb)
 }
 
 exports.wpm = (cb, wpm) => {
