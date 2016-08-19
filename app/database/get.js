@@ -1,8 +1,8 @@
 
-exports.wpm = (connectionPool, cb) => {
+exports.wpm = (connectionPool, limit, cb) => {
     connectionPool.getConnection((err, connection) => {
         if (!err) {
-            connection.query("select WPM as wpm from PARTICIPANTS where WPM is not null order by PARTICIPANT_ID desc limit 1000", (err, rows, fields) => {
+            connection.query("select WPM as wpm from PARTICIPANTS where WPM is not null order by PARTICIPANT_ID desc limit " + limit + ";", (err, rows, fields) => {
                 if(!err) {
                     cb(rows.map(((el) => { return el.wpm })))
                 } else {
@@ -16,14 +16,15 @@ exports.wpm = (connectionPool, cb) => {
     })
 }
 
-exports.errors = (connectionPool,cb) => {
+exports.errors = (connectionPool, limit, cb) => {
     connectionPool.getConnection((err, connection) => {
         if (!err) {
-            connection.query("select ERROR_RATE as error from PARTICIPANTS where ERROR_RATE is not null order by PARTICIPANT_ID desc limit 1000", (err, rows, fields) => { if(!err) {
-                cb(rows.map((el) => { return el.error }))
-            } else {
-                console.log("app/database/get.js errors: could not fetch error rates from db\n", err)
-            }
+            connection.query("select ERROR_RATE as error from PARTICIPANTS where ERROR_RATE is not null order by PARTICIPANT_ID desc limit " + limit + ";", (err, rows, fields) => {
+                if(!err) {
+                    cb(rows.map((el) => { return el.error }))
+                } else {
+                    console.log("app/database/get.js errors: could not fetch error rates from db\n", err)
+                }
             })
         } else {
             console.log("app/database/get.js errors: error getting connection\n", err)

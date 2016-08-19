@@ -1,12 +1,11 @@
 const d3 = require('d3')
-
 const db = require('../database')
 
 exports.histogram = (err, window, cb, options) => {
     let el = window.document.querySelector('#dataviz-container')
     let body = window.document.querySelector('body')
 
-    db.getWpm(1000, (data) => {
+    db.getErrors(1500, (data) => {
         let margin = {
             top: 10,
             right: 30,
@@ -16,26 +15,19 @@ exports.histogram = (err, window, cb, options) => {
         let width = 850 - margin.left - margin.right
         let height = 436 - margin.top - margin.bottom
 
-        data = data.filter((x) => { return x <= 120} )
+        data = data.filter((x) => { return x < 5 })
 
-        let sum = data.reduce((a, b) => a + b, 0)
         let n = data.length
 
-        // data = data.map((x) => { return x / 100 })
-
         let x = d3.scaleLinear()
-            .domain([0, 120])
+            .domain([0, 5])
             .range([0, width])
-            // .rangeRound(20, 120)
 
-        let histGen = d3.histogram()
+        let bins = d3.histogram()
             .domain(x.domain())
-            .thresholds(x.ticks(24))
-
-        let bins = histGen(data)
+            .thresholds(x.ticks(20))(data)
 
         let y = d3.scaleLinear()
-            // .domain([0, n])
             .domain([0, d3.max(bins, (d) => { return d.length })])
             .range([height, 0])
 
@@ -52,10 +44,10 @@ exports.histogram = (err, window, cb, options) => {
             .attr('class', 'bar')
             .attr('transform', (d) => { return `translate(${margin.left + x(d.x0)}, ${margin.top + y(d.length)})` })
 
-        if (options && options.wpm) {
-                let resBin = parseInt(options.wpm / 5)
-                bar.filter((d, i) => i === resBin)
-                    .attr('class', 'bar selected')
+        if (options && options.error) {
+            let resBin = parseInt(options.error / 0.2)
+            bar.filter((d, i) => i === resBin)
+                .attr('class', 'bar selected')
         }
 
         bar.append('rect')
@@ -87,7 +79,7 @@ exports.histogram = (err, window, cb, options) => {
             .attr('transform', `translate(${margin.left}, ${margin.top })`)
             .call(yAxis)
 
-        let svgrc = window.$("body").html()
+        let svgrc = window.$('body').html()
 
         cb(svgrc)
     })

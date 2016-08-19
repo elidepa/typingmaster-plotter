@@ -10,17 +10,17 @@ exports.test = () => {
     test.test(connectionPool)
 }
 
-exports.getWpm = (cb) => {
-    get.wpm(connectionPool, cb)
+exports.getWpm = (limit, cb) => {
+    get.wpm(connectionPool, limit, cb)
 }
 
-exports.getErrors = (cb) => {
-    get.errors(connectionPool, cb)
+exports.getErrors = (limit, cb) => {
+    get.errors(connectionPool, limit, cb)
 }
 
 exports.closeConnection = (cb) => {
     console.log("Closing db connections...")
-    connectionPool.end({}, (err) => {
+    connectionPool.end((err) => {
         if (err) {
             console.log("Error in closing the db connection pool ", err)
             cb()

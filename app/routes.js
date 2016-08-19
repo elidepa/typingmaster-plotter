@@ -19,9 +19,16 @@ module.exports = (app) => {
         }, parseInt(req.params.wpm))
     })
 
-    app.use(function(req, res, next) {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        next();
-    });
+    app.get(('/error'), (req, res) => {
+        plotter.error((plot) => {
+            res.send(plot)
+        })
+    })
+
+    app.get(('/error/:error'), (req, res) => {
+        var errorPercent = "0." + req.params.error
+        plotter.error((plot) => {
+            res.send(plot)
+        }, parseFloat(errorPercent) * 100)
+    })
 }

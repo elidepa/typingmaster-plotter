@@ -2,8 +2,9 @@ const jsdom = require('jsdom')
 const fs = require('fs')
 const jquery = fs.readFileSync(__dirname + "/../../public/vendor/jquery-3.1.0.js")
 
-const test = require('./test.js')
-const wpmPlotter = require('./wpm.js')
+const test = require('./test')
+const wpmPlotter = require('./wpm')
+const errorPlotter = require('./error')
 
 let plot = (done, cb, options) => {
     let htmlTemplate = "<body><div id='dataviz-container'></div></body>"
@@ -29,5 +30,13 @@ exports.wpm = (cb, wpm) => {
         plot(wpmPlotter.histogram, cb, {wpm: wpm})
     } else {
         plot(wpmPlotter.histogram, cb)
+    }
+}
+
+exports.error = (cb, error) => {
+    if (error) {
+        plot(errorPlotter.histogram, cb, {error: error})
+    } else {
+        plot(errorPlotter.histogram, cb)
     }
 }
