@@ -15,7 +15,6 @@
 }
 
 .bar text {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 0.7em;
     fill: white;
 }
@@ -26,4 +25,8 @@
 
 .tick text {
     font-size: 1.25em;
+}
+
+text {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

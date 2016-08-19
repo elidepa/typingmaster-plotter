@@ -87,6 +87,13 @@ exports.histogram = (err, window, cb, options) => {
             .attr('transform', `translate(${margin.left}, ${margin.top })`)
             .call(yAxis)
 
+        svg.append('text')
+            .attr('class', 'x label')
+            .attr('text-anchor', 'center')
+            .attr('x', width/2)
+            .attr('y', margin.top + height + 40)
+            .text('Words Per Minute')
+
         let svgrc = window.$("body").html()
 
         cb(svgrc)

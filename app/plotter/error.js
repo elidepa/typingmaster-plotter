@@ -9,7 +9,7 @@ exports.histogram = (err, window, cb, options) => {
         let margin = {
             top: 10,
             right: 30,
-            bottom: 30,
+            bottom: 50,
             left: 40
         }
         let width = 850 - margin.left - margin.right
@@ -78,6 +78,13 @@ exports.histogram = (err, window, cb, options) => {
             .attr('class', 'axis axis--y')
             .attr('transform', `translate(${margin.left}, ${margin.top })`)
             .call(yAxis)
+
+        svg.append('text')
+            .attr('class', 'x label')
+            .attr('text-anchor', 'center')
+            .attr('x', width/2)
+            .attr('y', margin.top + height + 40)
+            .text('Error Rate (%)')
 
         let svgrc = window.$('body').html()
 
