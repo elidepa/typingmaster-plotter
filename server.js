@@ -4,7 +4,6 @@ const app = express()
 const port = 3000
 
 const db = require('./app/database')
-db.test()
 
 require('./app/routes')(app)
 
