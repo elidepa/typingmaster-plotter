@@ -1,0 +1,29 @@
+.bar rect {
+    fill: steelblue;
+}
+
+.bar.selected rect {
+    fill: #D54A0F;
+}
+
+.bar rect:hover {
+    fill: #6AA0CC;
+}
+
+.bar.selected rect:hover {
+    fill: #F96F35;
+}
+
+.bar text {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 0.7em;
+    fill: white;
+}
+
+.bar:hover text {
+    visibility: visible;
+}
+
+.tick text {
+    font-size: 1.25em;
+}
