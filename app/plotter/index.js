@@ -34,7 +34,7 @@ exports.wpm = (cb, wpm) => {
 }
 
 exports.error = (cb, error) => {
-    if (error) {
+    if (error != undefined) {
         plot(errorPlotter.histogram, cb, {error: error})
     } else {
         plot(errorPlotter.histogram, cb)

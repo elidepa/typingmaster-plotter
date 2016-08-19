@@ -9,18 +9,20 @@ exports.histogram = (err, window, cb, options) => {
         let margin = {
             top: 10,
             right: 30,
-            bottom: 50,
+            bottom: 70,
             left: 40
         }
         let width = 850 - margin.left - margin.right
         let height = 436 - margin.top - margin.bottom
 
-        data = data.filter((x) => { return x < 5 })
+        let maxValue = 5
+
+        data = data.filter((x) => { return x < maxValue })
 
         let n = data.length
 
         let x = d3.scaleLinear()
-            .domain([0, 5])
+            .domain([0, maxValue])
             .range([0, width])
 
         let bins = d3.histogram()
@@ -44,18 +46,27 @@ exports.histogram = (err, window, cb, options) => {
             .attr('class', 'bar')
             .attr('transform', (d) => { return `translate(${margin.left + x(d.x0)}, ${margin.top + y(d.length)})` })
 
-        if (options && options.error) {
-            let resBin = parseInt(options.error / 0.2)
+        var percentFormat = d3.format(".1%")
+
+        if (options && options.error != undefined) {
+            let resBin = parseInt(options.error / (maxValue / bins.length))
             bar.filter((d, i) => i === resBin)
                 .attr('class', 'bar selected')
+
+            let pos = data.filter((x) => { return x <= options.error }).length
+
+            svg.append('text')
+                .attr('class', 'x label')
+                .attr('text-anchor', 'middle')
+                .attr('x', width/2)
+                .attr('y', margin.top + height + 60)
+                .text(`You made less errors than ${percentFormat(1 - (pos / n))} of other participants!`)
         }
 
         bar.append('rect')
             .attr('x', 1)
             .attr('width', x(bins[0].x1) - x(bins[0].x0) - 1)
             .attr('height', (d) => { return height - y(d.length) })
-
-        var percentFormat = d3.format(".1%")
 
         bar.append('text')
             .attr('dy', '0.75em')
@@ -81,7 +92,7 @@ exports.histogram = (err, window, cb, options) => {
 
         svg.append('text')
             .attr('class', 'x label')
-            .attr('text-anchor', 'center')
+            .attr('text-anchor', 'middle')
             .attr('x', width/2)
             .attr('y', margin.top + height + 40)
             .text('Error Rate (%)')
