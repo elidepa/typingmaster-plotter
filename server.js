@@ -3,7 +3,7 @@ const express = require('express')
 const app = express()
 const port = 3000
 
-const db = require('./app/database')
+// const db = require('./app/database')
 
 require('./app/routes')(app)
 
@@ -17,22 +17,23 @@ var server = app.listen(port, function (err) {
 
 var gracefulShutdown = () => {
     console.log("Shutting down server")
-    db.closeConnection(() => {
-        server.close(() => {
-            console.log("Closed all network connections")
-            process.exit()
-        })
-
-        setTimeout(() => {
-            console.log("Could not close connections, forcing the process to stop")
-            process.exit()
-        }, 10000)
-    })
-
-    setTimeout(() => {
-        console.log("Could not close connections, forcing the process to stop")
-        process.exit()
-    }, 100000)
+    // db.closeConnection(() => {
+    //     server.close(() => {
+    //         console.log("Closed all network connections")
+    //         process.exit()
+    //     })
+    //
+    //     setTimeout(() => {
+    //         console.log("Could not close connections, forcing the process to stop")
+    //         process.exit()
+    //     }, 10000)
+    // })
+    //
+    // setTimeout(() => {
+    //     console.log("Could not close connections, forcing the process to stop")
+    //     process.exit()
+    // }, 100000)
+    process.exit()
 }
 
 process.on('SIGTERM', gracefulShutdown)

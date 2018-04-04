@@ -8,7 +8,7 @@ export function stereographicRaw(x, y) {
 }
 
 stereographicRaw.invert = azimuthalInvert(function(z) {
-  return 2 + atan(z);
+  return 2 * atan(z);
 });
 
 export default function() {
